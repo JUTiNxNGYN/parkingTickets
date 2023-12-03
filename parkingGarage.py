@@ -1,8 +1,6 @@
-# class Ticket():
+# Our parking garage has 100 spaces available and keeps track of the active tickets using the current ticket dictionary.
+# The garage keeps track of individual tickets by their number which is assigned by the available tickets list.
 
-#     def __init__(self):
-#         self.value=[]
-#         self.paid=False
 
 class ParkingGarage():
 
@@ -16,14 +14,13 @@ class ParkingGarage():
         num=min(self.available_tickets)
         self.current_tickets.update({num:{'value':[],'paid':False}})
         self.available_tickets.remove(num)
-        print(f"your ticket number is {num}")
+        print(f"Your ticket number is {num}\n")
         print(self.current_tickets)
 
     def payForParking(self):
         print("Pay for parking")
         while True:
-            num=int(input('Please input ticket #'))
-        # while not self.current_tickets['paid']:
+            num=int(input('Please input ticket #\t'))
             price=input('How much are you paying today?\t')
             self.current_tickets[num]['value'].append(price)
             self.current_tickets[num]['paid']=True
@@ -31,7 +28,7 @@ class ParkingGarage():
 
     def leaveGarage(self):
         while True:
-            num=int(input('Please input ticket #'))
+            num=int(input('Please input ticket #\t'))
             if self.current_tickets[num]['paid']== True:
                 self.available_spaces += 1
                 del self.current_tickets [num]
@@ -46,6 +43,7 @@ class ParkingGarage():
     def parking(self):
         while True:
             menu = input('What do you want to do today? t/take ticket, p/pay for parking, l/leave garage\t')
+            print("\n")
             if menu == 't':
                 self.takeTicket()
             elif menu == 'p':
