@@ -8,35 +8,40 @@ class ParkingGarage():
 
     def __init__(self):
         self.available_tickets=list(range(1,100+1))
-        self.available_spaces=list(range(1,100+1))
-        self.current_tickets=[]
+        self.available_spaces=100
+        self.current_tickets={}
 
     def takeTicket(self):
-        print("Take Ticket")
-        self.available_tickets -= 1
         self.available_spaces -= 1
-        x=self.available_tickets.pop(min(self.available_tickets))
-        self.current_tickets.append({x,{'value':[],'paid':False}})
+        num=min(self.available_tickets)
+        self.current_tickets.update({num:{'value':[],'paid':False}})
+        self.available_tickets.remove(num)
+        print(f"your ticket number is {num}")
+        print(self.current_tickets)
 
     def payForParking(self):
         print("Pay for parking")
         while True:
-            num=input('Please input ticket #')
+            num=int(input('Please input ticket #'))
         # while not self.current_tickets['paid']:
             price=input('How much are you paying today?\t')
-            self.current_tickets['value'].append(price)
-            self.current_tickets['paid']=True
+            self.current_tickets[num]['value'].append(price)
+            self.current_tickets[num]['paid']=True
+            break
 
     def leaveGarage(self):
-        if self.current_tickets['paid']:
-            self.available_tickets += 1
-            self.available_spaces += 1
-            x=self.available_tickets.pop(self.current_tickets['number'])
-            (self.available_tickets).append(x)
-            print("Thank You, have a nice day")
-        else:
-            print("Please pay for ticket before exit.\n")
-            self.payForParking()
+        while True:
+            num=int(input('Please input ticket #'))
+            if self.current_tickets[num]['paid']== True:
+                self.available_spaces += 1
+                del self.current_tickets [num]
+                (self.available_tickets).append(num)
+                print("Thank You, have a nice day")
+                break
+            else:
+                print("Please pay for ticket before exit.\n")
+                self.payForParking()
+                break
 
     def parking(self):
         while True:
